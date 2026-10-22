@@ -1,5 +1,5 @@
 import { CheckOutlined, SearchOutlined } from '@ant-design/icons';
-import { App, Button, Col, Descriptions, Drawer, Input, Row, Segmented, Select, Space, Table, Tag } from 'antd';
+import { App, Button, Col, Descriptions, Drawer, Grid, Input, Row, Segmented, Select, Space, Table, Tag } from 'antd';
 import { useMemo, useState } from 'react';
 import EChart from '@/components/EChart';
 import { legendTopRight } from '@/components/chartKit';
@@ -32,6 +32,7 @@ export default function Alarms() {
   const [kw, setKw] = useState('');
   const [selected, setSelected] = useState<string[]>([]);
   const [detail, setDetail] = useState<Alarm | null>(null);
+  const screens = Grid.useBreakpoint();
 
   const data = log.filter(
     (a) =>
@@ -281,10 +282,10 @@ export default function Alarms() {
           </Panel>
         </Col>
       </Row>
-      <Drawer open={!!detail} onClose={() => setDetail(null)} width={620} title={detail && `${detail.target} · ${detail.title}`}>
+      <Drawer open={!!detail} onClose={() => setDetail(null)} width={screens.md ? 620 : '100%'} title={detail && `${detail.target} · ${detail.title}`}>
         {detail && (
           <Space direction="vertical" size={16} style={{ width: '100%' }}>
-            <Descriptions size="small" column={2} bordered>
+            <Descriptions size="small" column={{ xs: 1, sm: 2 }} bordered>
               <Descriptions.Item label="告警编号">{detail.id}</Descriptions.Item>
               <Descriptions.Item label="级别">
                 <LevelTag level={detail.level} />

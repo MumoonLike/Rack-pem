@@ -116,12 +116,14 @@ export default function FloorPlan({ snap, cell, selected, onSelect, showAlarms =
   };
 
   return (
-    <div className="floor">
-      <div className="floor-aisle hot">热通道 A</div>
-      {row('A')}
-      <div className="floor-aisle cold">封闭冷通道</div>
-      {row('B')}
-      <div className="floor-aisle hot">热通道 B</div>
+    <div className="floor-wrap">
+      <div className="floor">
+        <div className="floor-aisle hot">热通道 A</div>
+        {row('A')}
+        <div className="floor-aisle cold">封闭冷通道</div>
+        {row('B')}
+        <div className="floor-aisle hot">热通道 B</div>
+      </div>
     </div>
   );
 }

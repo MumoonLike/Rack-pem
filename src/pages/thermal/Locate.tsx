@@ -162,11 +162,11 @@ export default function Locate() {
             sub={sel.node.label}
             extra={<SoftTag color={sel.score >= 60 ? PALETTE.red : sel.score >= 40 ? PALETTE.orange : PALETTE.green}>评分 {sel.score.toFixed(0)}</SoftTag>}
           >
-            <div style={{ display: 'flex', gap: 12 }}>
-              <div style={{ width: 236, flex: 'none' }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <div style={{ width: 236, flex: 'none', margin: '0 auto' }}>
                 <RackElevation rackId={sel.node.rack} snap={s} rowH={10} highlight={{ side: sel.node.side, level: sel.node.level, uEst: sel.uEst }} />
               </div>
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minWidth: 140 }}>
                 <MiniStat label="当前温度" value={fx(sel.temp, 1)} unit="℃" />
                 <MiniStat label="限值裕度" value={fx(sel.margin, 1)} unit="℃" color={sel.margin < 2 ? PALETTE.orange : undefined} />
                 <MiniStat label="测点 U 位" value={`U${LEVEL_U[sel.node.level]}`} />

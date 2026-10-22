@@ -11,7 +11,7 @@ import {
   SunOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Badge, Breadcrumb, Button, Dropdown, Empty, Layout, Menu, Popover, Tooltip } from 'antd';
+import { Avatar, Badge, Breadcrumb, Button, Drawer, Dropdown, Empty, Grid, Layout, Menu, Popover, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -112,6 +112,9 @@ function LinkStatus() {
 export default function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [full, setFull] = useState(false);
+  const screens = Grid.useBreakpoint();
+  const mobile = screens.md === false;
+  const [navOpen, setNavOpen] = useState(false);
   const { mode, toggle } = useThemeMode();
   const loc = useLocation();
   const nav = useNavigate();
@@ -149,66 +152,95 @@ export default function AppLayout() {
 
   const crumbs = [{ title: <span className="hide-sm">中心机柜动力环监一体化系统</span> }, ...(group ? [{ title: group.module ?? group.label }] : []), ...(leaf ? [{ title: leaf.label }] : [])];
 
-  return (
-    <Layout className="app-shell">
-      <Sider width={228} collapsedWidth={68} collapsed={collapsed} className="app-sider" theme={mode}>
-        <div className="brand">
-          <BrandMark />
-          {!collapsed && (
-            <div className="brand-text">
-              <div className="brand-title">动力环监一体化</div>
-              <div className="brand-sub">RACK · PEM</div>
-            </div>
-          )}
-        </div>
-        <div className="menu-scroll">
-          <Menu
-            mode="inline"
-            theme={mode}
-            items={items}
-            selectedKeys={[loc.pathname]}
-            openKeys={collapsed ? undefined : openKeys}
-            onOpenChange={(k) => setOpenKeys(k as string[])}
-            onClick={(e) => nav(e.key)}
-            style={{ borderInlineEnd: 'none', paddingTop: 8 }}
-          />
-        </div>
-        {!collapsed && (
-          <div className="sider-foot">
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span>采集周期</span>
-              <span className="num text-2">{TICK_MS / 1000} s</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-              <span>接入测点</span>
-              <span className="num text-2">{SERIES_KEYS.length}</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-              <span>系统版本</span>
-              <span className="num text-2">V2.3.0</span>
-            </div>
+  const narrow = collapsed && !mobile;
+  const sideNav = (
+    <>
+      <div className="brand">
+        <BrandMark />
+        {!narrow && (
+          <div className="brand-text">
+            <div className="brand-title">动力环监一体化</div>
+            <div className="brand-sub">RACK · PEM</div>
           </div>
         )}
-      </Sider>
+      </div>
+      <div className="menu-scroll">
+        <Menu
+          mode="inline"
+          theme={mode}
+          items={items}
+          selectedKeys={[loc.pathname]}
+          openKeys={narrow ? undefined : openKeys}
+          onOpenChange={(k) => setOpenKeys(k as string[])}
+          onClick={(e) => {
+            nav(e.key);
+            setNavOpen(false);
+          }}
+          style={{ borderInlineEnd: 'none', paddingTop: 8 }}
+        />
+      </div>
+      {!narrow && (
+        <div className="sider-foot">
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>采集周期</span>
+            <span className="num text-2">{TICK_MS / 1000} s</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+            <span>接入测点</span>
+            <span className="num text-2">{SERIES_KEYS.length}</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+            <span>系统版本</span>
+            <span className="num text-2">V2.3.0</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
+
+  return (
+    <Layout className="app-shell">
+      {mobile ? (
+        <Drawer
+          open={navOpen}
+          onClose={() => setNavOpen(false)}
+          placement="left"
+          width={248}
+          closable={false}
+          styles={{ body: { padding: 0, display: 'flex', flexDirection: 'column' } }}
+          className="nav-drawer"
+        >
+          {sideNav}
+        </Drawer>
+      ) : (
+        <Sider width={228} collapsedWidth={68} collapsed={collapsed} className="app-sider" theme={mode}>
+          {sideNav}
+        </Sider>
+      )}
       <Layout style={{ background: 'transparent', minWidth: 0 }}>
         <Header className="app-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
-            <Button type="text" icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} onClick={() => setCollapsed((c) => !c)} />
-            <Breadcrumb items={crumbs} />
+            <Button
+              type="text"
+              icon={collapsed || mobile ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => (mobile ? setNavOpen(true) : setCollapsed((c) => !c))}
+            />
+            {mobile ? <span style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{leaf?.label ?? group?.label}</span> : <Breadcrumb items={crumbs} />}
           </div>
           <div className="header-tools">
             <span className="header-chip hide-md">
               <EnvironmentOutlined />
               {SITE.building} · {SITE.name.split('·')[1]?.trim()}
             </span>
-            <LinkStatus />
-            <Clock />
+            {!mobile && <LinkStatus />}
+            {!mobile && <Clock />}
             <AlarmBell />
             <Tooltip title={mode === 'dark' ? '切换浅色主题' : '切换深色主题'}>
               <Button type="text" shape="circle" icon={mode === 'dark' ? <SunOutlined /> : <MoonOutlined />} onClick={toggle} />
             </Tooltip>
             <Tooltip title={full ? '退出全屏' : '全屏'}>
               <Button
+                className="hide-xs"
                 type="text"
                 shape="circle"
                 icon={full ? <FullscreenExitOutlined /> : <FullscreenOutlined />}

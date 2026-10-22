@@ -73,7 +73,7 @@ export default function Ranking() {
 
   const radarOpt = {
     radar: {
-      indicator: SUB.map((s) => ({ name: s.label, max: 1 })),
+      indicator: SUB.map((s) => ({ name: s.label, min: 0, max: 100 })),
       radius: '64%',
       splitNumber: 4,
       axisName: { fontSize: 11 },
@@ -84,7 +84,7 @@ export default function Ranking() {
         type: 'radar',
         symbolSize: 5,
         data: [
-          { value: SUB.map((s) => +cur.sub[s.key].toFixed(3)), name: cur.rack, areaStyle: { color: 'rgba(255,90,95,0.25)' }, lineStyle: { color: PALETTE.red }, itemStyle: { color: PALETTE.red } },
+          { value: SUB.map((s) => +(cur.sub[s.key] * 100).toFixed(1)), name: cur.rack, areaStyle: { color: 'rgba(255,90,95,0.25)' }, lineStyle: { color: PALETTE.red }, itemStyle: { color: PALETTE.red } },
         ],
       },
     ],

@@ -1,4 +1,4 @@
-import { Col, Descriptions, Drawer, Empty, Row, Space, Table, Tag } from 'antd';
+import { Col, Descriptions, Drawer, Empty, Grid, Row, Space, Table, Tag } from 'antd';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { engine, useTelemetry } from '@/core/engine';
 import { fx, tstr } from '@/core/format';
@@ -44,13 +44,13 @@ function RackDetail({ id }: { id: string }) {
   );
 
   return (
-    <Row gutter={16}>
-      <Col span={9}>
+    <Row gutter={[16, 16]}>
+      <Col xs={24} lg={9}>
         <Panel title="机柜立面" sub={`${def.devices.filter((d) => d.ratedW > 0).length} 台设备`}>
           <RackElevation rackId={id} snap={s} rowH={12} />
         </Panel>
       </Col>
-      <Col span={15}>
+      <Col xs={24} lg={15}>
         <Space direction="vertical" size={12} style={{ width: '100%' }}>
           <div className="grid-auto" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
             <MiniStat label="IT 负载" value={fx(rs.load, 2)} unit="kW" />
@@ -106,7 +106,7 @@ function RackDetail({ id }: { id: string }) {
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="近 1 小时无告警" style={{ padding: 16 }} />
             )}
           </Panel>
-          <Descriptions size="small" column={3} bordered>
+          <Descriptions size="small" column={{ xs: 1, sm: 2, md: 3 }} bordered>
             <Descriptions.Item label="类型">{KIND_LABEL[def.kind]}</Descriptions.Item>
             <Descriptions.Item label="额定功率">{def.ratedKw} kW</Descriptions.Item>
             <Descriptions.Item label="PDU 规格">{def.breakerA} A × 2</Descriptions.Item>
@@ -126,6 +126,7 @@ function RackDetail({ id }: { id: string }) {
 
 export function RackDrawerProvider({ children }: { children: ReactNode }) {
   const [id, setId] = useState<string | null>(null);
+  const screens = Grid.useBreakpoint();
   const open = useCallback((x: string) => setId(x), []);
   const value = useMemo(() => ({ open }), [open]);
   const def = id ? RACK_MAP[id] : null;
@@ -135,7 +136,7 @@ export function RackDrawerProvider({ children }: { children: ReactNode }) {
       <Drawer
         open={!!id}
         onClose={() => setId(null)}
-        width={1080}
+        width={screens.lg ? 1080 : '100%'}
         destroyOnClose
         title={
           def && (

@@ -637,3 +637,93 @@ body {
     font-size: 12.5px;
   }
 }
+
+.nav-drawer .ant-drawer-body {
+  background: var(--panel);
+}
+.nav-drawer .menu-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ---------- 平板 / 手机 ---------- */
+@media (max-width: 991px) {
+  .floor-wrap {
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+  .floor-wrap > .floor {
+    min-width: 760px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hide-xs {
+    display: none !important;
+  }
+  .app-header {
+    padding: 0 10px !important;
+  }
+  .header-tools {
+    gap: 6px;
+  }
+  .app-content {
+    padding: 12px 12px 20px;
+  }
+  .page-head h1 {
+    font-size: 18px;
+    flex-wrap: wrap;
+  }
+  .grid-auto {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .grid-auto > * {
+    grid-column: auto !important;
+  }
+  .panel-head {
+    flex-wrap: wrap;
+    padding-bottom: 4px;
+  }
+  .panel-extra {
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .panel-extra .ant-space,
+  .page-head .ant-space {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .ant-segmented {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .panel-title {
+    flex-wrap: wrap;
+  }
+  .page-head > div {
+    max-width: 100%;
+  }
+  .panel-body {
+    padding: 10px 12px 14px;
+  }
+  .ant-table-content {
+    overflow-x: auto;
+  }
+  .ant-table-content > table {
+    min-width: 640px;
+  }
+  .hub-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .kpi-value .v {
+    font-size: 24px;
+  }
+  .wide-scroll {
+    overflow-x: auto;
+  }
+  .wide-scroll > * {
+    min-width: 640px;
+  }
+}

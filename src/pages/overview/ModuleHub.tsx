@@ -62,7 +62,7 @@ export default function ModuleHub({ top, bottom, center }: { top: ModuleCard[]; 
   const line = 'var(--line-strong)';
   return (
     <div className="module-flow" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0,1fr))', gap: 8 }}>
+      <div className="hub-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0,1fr))', gap: 8 }}>
         {top.map((m) => (
           <Card key={m.title} m={m} />
         ))}
@@ -102,7 +102,7 @@ export default function ModuleHub({ top, bottom, center }: { top: ModuleCard[]; 
           <animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M150 0 V13 H225 V26" />
         </circle>
       </svg>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: 8 }}>
+      <div className="hub-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: 8 }}>
         {bottom.map((m) => (
           <Card key={m.title} m={m} />
         ))}
