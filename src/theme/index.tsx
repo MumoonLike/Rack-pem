@@ -91,7 +91,8 @@ function readMode(): Mode {
   } catch {
     /* 存储不可用时使用默认值 */
   }
-  return 'dark';
+  const attr = document.documentElement.dataset.theme;
+  return attr === 'light' ? 'light' : 'dark';
 }
 
 export function AppThemeProvider({ children }: { children: ReactNode }) {
@@ -99,14 +100,35 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = mode;
-    try {
-      localStorage.setItem('pem.theme', mode);
-    } catch {
-      /* ignore */
-    }
   }, [mode]);
 
-  const value = useMemo(() => ({ mode, toggle: () => setMode((m) => (m === 'dark' ? 'light' : 'dark')) }), [mode]);
+  // 宿主环境（如嵌入页面）切换 data-theme 时同步
+  useEffect(() => {
+    const root = document.documentElement;
+    const ob = new MutationObserver(() => {
+      const v = root.dataset.theme;
+      if (v === 'light' || v === 'dark') setMode((m) => (m === v ? m : v));
+    });
+    ob.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => ob.disconnect();
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      mode,
+      toggle: () =>
+        setMode((m) => {
+          const next = m === 'dark' ? 'light' : 'dark';
+          try {
+            localStorage.setItem('pem.theme', next);
+          } catch {
+            /* ignore */
+          }
+          return next;
+        }),
+    }),
+    [mode],
+  );
   const dark = mode === 'dark';
 
   return (

@@ -244,7 +244,7 @@ export default function AppLayout() {
                 type="text"
                 shape="circle"
                 icon={full ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-                onClick={() => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())}
+                onClick={() => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())?.catch(() => {})}
               />
             </Tooltip>
             <Dropdown

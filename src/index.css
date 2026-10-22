@@ -662,13 +662,13 @@ body {
     display: none !important;
   }
   .app-header {
-    padding: 0 10px !important;
+    padding: 0 16px !important;
   }
   .header-tools {
     gap: 6px;
   }
   .app-content {
-    padding: 12px 12px 20px;
+    padding: 12px 16px 20px;
   }
   .page-head h1 {
     font-size: 18px;
