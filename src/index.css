@@ -117,23 +117,37 @@ body {
   overflow: hidden;
 }
 .brand-mark {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   flex: none;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.brand-mark img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }
 .brand-text {
-  line-height: 1.2;
+  line-height: 1.25;
+  min-width: 0;
 }
 .brand-title {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 16px;
   color: var(--text);
-  letter-spacing: 0.5px;
+  letter-spacing: 3px;
 }
 .brand-sub {
   font-size: 11px;
   color: var(--text-3);
-  letter-spacing: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sider-foot {

@@ -23,23 +23,15 @@ import { SITE } from '@/core/topology';
 import { Dot, LevelTag } from '@/components/ui';
 import { NAV, findNav } from '@/nav';
 import { PALETTE, useThemeMode } from '@/theme';
+import logo from '@/assets/logo.png';
 
 const { Sider, Header, Content } = Layout;
 
 function BrandMark() {
   return (
-    <svg className="brand-mark" viewBox="0 0 32 32">
-      <defs>
-        <linearGradient id="bm" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#3E8BFF" />
-          <stop offset="1" stopColor="#22C3D6" />
-        </linearGradient>
-      </defs>
-      <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#bm)" />
-      <rect x="9" y="6.5" width="14" height="19" rx="2" fill="none" stroke="#fff" strokeWidth="1.8" />
-      <path d="M11.5 11.5h9M11.5 15.5h9" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" opacity=".7" />
-      <path d="M10.5 21h3l1.2-2.4 1.8 4 1.4-2.6h3.6" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <span className="brand-mark">
+      <img src={logo} alt="明点信科" />
+    </span>
   );
 }
 
@@ -159,8 +151,8 @@ export default function AppLayout() {
         <BrandMark />
         {!narrow && (
           <div className="brand-text">
-            <div className="brand-title">动力环监一体化</div>
-            <div className="brand-sub">RACK · PEM</div>
+            <div className="brand-title">明点信科</div>
+            <div className="brand-sub">中心机柜动力环监一体化系统</div>
           </div>
         )}
       </div>
