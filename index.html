@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="icon" type="image/png" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="中心机柜动力环监一体化系统" />
     <title>中心机柜动力环监一体化系统</title>
@@ -17,6 +17,8 @@
       html[data-theme='light'], html[data-theme='light'] body { background: #f2f5f9; }
       .boot { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; color: #c9d4e5; }
       html[data-theme='light'] .boot { color: #1f2a3d; }
+      .boot-logo { width: 56px; height: 56px; border-radius: 14px; background: #fff; display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+      .boot-logo img { width: 40px; height: 40px; object-fit: contain; }
       .boot-title { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
       .boot-sub { font-size: 12px; opacity: .6; }
       .boot-bar { width: 180px; height: 3px; border-radius: 3px; background: rgba(148,163,184,.2); overflow: hidden; }
@@ -27,12 +29,7 @@
   <body>
     <div id="root">
       <div class="boot">
-        <svg width="44" height="44" viewBox="0 0 32 32" aria-hidden="true">
-          <defs><linearGradient id="bg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3E8BFF" /><stop offset="1" stop-color="#22C3D6" /></linearGradient></defs>
-          <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#bg0)" />
-          <rect x="9" y="6.5" width="14" height="19" rx="2" fill="none" stroke="#fff" stroke-width="1.8" />
-          <path d="M10.5 21h3l1.2-2.4 1.8 4 1.4-2.6h3.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+        <div class="boot-logo"><img src="/src/assets/logo.png" alt="明点信科" width="40" height="40" /></div>
         <div class="boot-title">中心机柜动力环监一体化系统</div>
         <div class="boot-bar"><span></span></div>
         <div class="boot-sub">正在建立采集链路…</div>
